@@ -167,10 +167,10 @@
             <h3>Examples</h3>
             <div class="example-code">
                 <pre><code>
-curl -X POST {{ base_url }}/create_agent \
+curl -X POST https://retell-vapi-production.up.railway.app/create_agent \
 -H "Content-Type: application/json" \
 -d '{
-    "apiType": "retell",
+    "apiType": "retell", 
     "voiceSpeed": 1.2,
     "volume": 0.8,
     "voicemailMessage": "Hello, please leave a message after the beep."
