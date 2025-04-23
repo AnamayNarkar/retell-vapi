@@ -73,17 +73,21 @@ def create_agent():
         if api_type not in ['retell', 'vapi']:
             raise ValueError("Invalid apiType. Use 'retell' or 'vapi'")
         
+        # Extract common parameters
         voicemail_message = data.get('voicemailMessage', 
                                     'Hello, this is a voicemail message.')
         voice_speed = float(data.get('voiceSpeed', 1.0))
-        volume = float(data.get('volume', 1.0)) if api_type == 'retell' else None
 
-        # Parameter validation
+        # Provider-specific parameters
+        volume = None
+        if api_type == 'retell':
+            volume = float(data.get('volume', 1.0))
+            if not 0.5 <= volume <= 2.0:
+                raise ValueError("volume must be between 0.5 and 2.0")
+
+        # Parameter validation (common)
         if not 0.5 <= voice_speed <= 2.0:
             raise ValueError("voiceSpeed must be between 0.5 and 2.0")
-            
-        if volume and not 0.5 <= volume <= 2.0:
-            raise ValueError("volume must be between 0.5 and 2.0")
 
         # Create appropriate API body
         if api_type == 'retell':
@@ -99,6 +103,9 @@ def create_agent():
                 volume=volume
             )
         else:
+            if 'volume' in data:
+                del data['volume']
+                
             voice = VapiVoice(speed=voice_speed)
             model = VapiModel()
             api_body = VapiApiBody(
