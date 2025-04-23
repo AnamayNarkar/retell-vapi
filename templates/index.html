@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice API Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #4f46e5;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .status-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .endpoint-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .param-table th,
+        .param-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .param-table th {
+            background: #f8fafc;
+        }
+
+        .example-code {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .badge-required {
+            background: #dc2626;
+            color: white;
+        }
+
+        .badge-optional {
+            background: #e2e8f0;
+            color: #64748b;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .endpoint-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Voice Agent API Documentation</h1>
+            <p>v{{ version }}</p>
+        </div>
+
+        <div class="endpoint-card">
+            <h2>POST /create_agent</h2>
+            <p>Create a voice agent configuration</p>
+
+            <table class="param-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <code>apiType</code> 
+                            <span class="badge badge-required">required</span>
+                        </td>
+                        <td>string</td>
+                        <td>Provider type: <code>retell</code> or <code>vapi</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>voicemailMessage</code></td>
+                        <td>string</td>
+                        <td>Default greeting message (optional)</td>
+                    </tr>
+                    <tr>
+                        <td><code>voiceSpeed</code></td>
+                        <td>float</td>
+                        <td>Speech rate (0.5-2.0)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code>volume</code>
+                            <span class="badge badge-optional">retell only</span>
+                        </td>
+                        <td>float</td>
+                        <td>Output volume (0.5-2.0)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Examples</h3>
+            <div class="example-code">
+                <pre><code>
+curl -X POST {{ base_url }}/create_agent \
+-H "Content-Type: application/json" \
+-d '{
+    "apiType": "retell",
+    "voiceSpeed": 1.2,
+    "volume": 0.8,
+    "voicemailMessage": "Hello, please leave a message after the beep."
+}'</code></pre>
+            </div>
+</body>
+</html>
